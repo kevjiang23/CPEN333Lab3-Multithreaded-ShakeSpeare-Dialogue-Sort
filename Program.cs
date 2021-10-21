@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Diagnostics;
@@ -48,8 +48,9 @@ namespace Lab3
 
             for (int j = 0; j < numThreads; j++)
             {
-                mainThread[j] = new Thread(() => HelperFunctions.CountCharacterWords(filenames[j], mutex, wcountsMultiThread));
-                mainThread[j].Start();
+                int index = j;
+                mainThread[index] = new Thread(() => HelperFunctions.CountCharacterWords(filenames[index], mutex, wcountsMultiThread));
+                mainThread[index].Start();
             }
             for (int j = 0; j < numThreads; j++)
             {
