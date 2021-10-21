@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Linq;
@@ -82,7 +82,7 @@ namespace Lab3
                         }
                         else
                         {
-                            // If the key doesn't exist, add the character to the dictionary and its value
+                            // If the key doesn't exist, add the character to the dictionary along with its value
                             wcounts.Add(character, charwcount);
                         }
                         mutex.ReleaseMutex();
@@ -134,7 +134,7 @@ namespace Lab3
                 // no name found
                 if (end_idx >= line.Length)
                 {
-                    return 0;
+                    return -1;
                 }
 
                 // extract character's name
@@ -151,7 +151,7 @@ namespace Lab3
                 return 4;
             }
 
-            return 0;
+            return -1;
         }
 
         /**
