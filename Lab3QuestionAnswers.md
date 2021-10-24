@@ -2,4 +2,4 @@
 
 2) After running my code numerous times, the majority of the time my multithreaded implementation actually runs slower than my singlethreaded implementation (e.g my singlethreaded runtime would be 20ms but my multithreaded runtime would be 16ms). This shows that multithreaded is not always more efficient than singlethreaded; one key reason why this is may have happened for this lab could be because we are only using 10 threads to sort each of the 10 texts, and the effects of multithreading are more effective when there are more threads (e.g in lab 2, we used up to 10^7 threads in our tests).
 
-3) 
+3) To tackle this, the easiest method would be to ensure that the code keeps track of where the character appears. Since each thread is responsible for a single text, we can check if an existing character exists in the dictionary already as a result of previous threads. If it exists already, we can create a new entry for it that will not overrite the character's wordcount from a different thread. 
