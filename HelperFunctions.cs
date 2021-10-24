@@ -74,6 +74,7 @@ namespace Lab3
                 {
                     if (isDialogueIndex > 0 && character != " ")
                     {
+                        // Use mutex to protect critical section 
                         mutex.WaitOne();
                         charwcount = WordCount(ref line, isDialogueIndex);
                         if (wcounts.ContainsKey(character))
@@ -88,8 +89,6 @@ namespace Lab3
                         mutex.ReleaseMutex();
                     }
                 }
-                // Reset character
-                character = " ";
             }
             // Close file
             file.Close();
