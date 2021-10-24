@@ -11,6 +11,9 @@ namespace Lab3
         {
             // map and mutex for thread safety
             Mutex mutex = new Mutex();
+            // stopwatch to help measure performance of singlethread vs multithread
+            Stopwatch stopWatch = new Stopwatch();
+
             Dictionary<string, int> wcountsSingleThread = new Dictionary<string, int>();
             Dictionary<string, int> wcountsMultiThread = new Dictionary<string, int>();
             List<Tuple<int, string>> singleThreadTupleList = new List<Tuple<int, string>>();
@@ -32,12 +35,17 @@ namespace Lab3
             //=============================================================
             // YOUR IMPLEMENTATION HERE TO COUNT WORDS IN SINGLE THREAD
             //=============================================================
+            stopWatch.Start();
             for (int i = 0; i < 10; i++) {
                 HelperFunctions.CountCharacterWords(filenames[i], mutex, wcountsSingleThread);
             }
             singleThreadTupleList = HelperFunctions.SortCharactersByWordcount(wcountsSingleThread);
             HelperFunctions.PrintListofTuples(singleThreadTupleList);
             Console.WriteLine("SingleThread is Done!");
+
+            stopWatch.Stop();
+            TimeSpan tsSingle = stopWatch.Elapsed;
+            stopWatch.Reset();
             //=============================================================
             // YOUR IMPLEMENTATION HERE TO COUNT WORDS IN MULTIPLE THREADS
             //=============================================================
@@ -46,6 +54,7 @@ namespace Lab3
             int numThreads = 10;
             Thread[] mainThread = new Thread[numThreads];
 
+            stopWatch.Start();
             for (int j = 0; j < numThreads; j++)
             {
                 int index = j;
@@ -60,6 +69,19 @@ namespace Lab3
             multiThreadTupleList = HelperFunctions.SortCharactersByWordcount(wcountsMultiThread);
             HelperFunctions.PrintListofTuples(multiThreadTupleList);
             Console.WriteLine("MultiThread is Done!");
+
+            stopWatch.Stop();
+            TimeSpan tsMulti = stopWatch.Elapsed;
+            stopWatch.Reset();
+
+            // Compare runtimes of single-thread and multi-thread implementations
+            string singlethreadTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", tsSingle.Hours, tsSingle.Minutes,
+            tsSingle.Seconds, tsSingle.Milliseconds / 10);
+            string multithreadTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", tsMulti.Hours, tsMulti.Minutes,
+            tsMulti.Seconds, tsMulti.Milliseconds / 10);
+            Console.WriteLine("Singlethread Runtime " + singlethreadTime);
+            Console.WriteLine("Multithread Runtime " + multithreadTime);
+
             return;
         }
     }
